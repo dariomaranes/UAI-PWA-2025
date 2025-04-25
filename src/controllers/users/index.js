@@ -1,3 +1,5 @@
+import User from "../../models/user.js";
+
 const users = {
   1: {
     username: "john",
@@ -18,4 +20,20 @@ const getUsers = (req, res) => {
   });
 };
 
-export { getUsers };
+const createUser = async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json({
+      message: 'Created successfully',
+      data: user,
+      error: false
+    })
+  } catch (error) {
+    res.status(400).json({
+      error: error.message
+    })
+  }
+}
+
+export { getUsers, createUser };
