@@ -1,6 +1,7 @@
+import { response, request } from "express";
 import User from "../../models/user.js";
 
-const createUser = async (req, res) => {
+const createUser = async (req: request, res: response) => {
   try {
     const user = new User(req.body);
     await user.save();
@@ -16,7 +17,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getUsers = async (req, res) => {
+const getUsers = async (req: request, res: response) => {
   try {
     const users = await User.find();
     res.status(200).json({
@@ -31,7 +32,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
+const getUserById = async (req: request, res: response) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -53,7 +54,7 @@ const getUserById = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req: request, res: response) => {
   try {
     const { id } = req.params;
 
@@ -82,7 +83,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req: request, res: response) => {
   try {
     const { id } = req.params;
     const user = await User.findByIdAndDelete(id);
