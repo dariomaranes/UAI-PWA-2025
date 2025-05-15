@@ -1,6 +1,7 @@
+import { Request, Response } from "express";
 import Category from "../../models/category.js";
 
-const getCategories = async (req, res) => {
+const getCategories = async (req: Request, res: Response) => {
   try {
     const products = await Category.find();
     res.status(200).json({
@@ -8,14 +9,14 @@ const getCategories = async (req, res) => {
       data: products,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const createCategory = async (req, res) => {
+const createCategory = async (req: Request, res: Response) => {
   try {
     const category = new Category(req.body);
     await category.save();
@@ -24,7 +25,7 @@ const createCategory = async (req, res) => {
       data: category,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });

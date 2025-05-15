@@ -1,7 +1,16 @@
 import mongoose, { Schema } from "mongoose";
 
+interface User extends Schema {
+  name: string;
+  lastName: string;
+  birthDate: Date;
+  email: string;
+  isAdmin: boolean;
+}
+
 const userSchema = new Schema(
     {
+        _id: mongoose.Types.ObjectId,
         name: {
             type: String,
         },
@@ -26,6 +35,6 @@ const userSchema = new Schema(
     }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<User>("User", userSchema);
 
 export default User;

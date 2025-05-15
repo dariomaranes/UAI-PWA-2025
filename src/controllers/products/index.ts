@@ -1,7 +1,8 @@
-import Category from "../../models/category.js";
-import Product from "../../models/product.js";
+import Category from "../../models/category";
+import Product from "../../models/product";
+import { Request, Response } from "express";
 
-const getProducts = async (req, res) => {
+const getProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.find();
     res.status(200).json({
@@ -9,36 +10,37 @@ const getProducts = async (req, res) => {
       data: products,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const getProductById = async (req, res) => {
+const getProductById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const product = await Product.findById(id);
     if (!product) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "Product not found",
         error: true,
       });
+      return;
     }
     res.status(200).json({
       message: "Product obtained successfully",
       data: product,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const createProduct = async (req, res) => {
+const createProduct = async (req: Request, res: Response) => {
   try {
     const product = new Product(req.body);
     await product.save();
@@ -47,31 +49,32 @@ const createProduct = async (req, res) => {
       data: product,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const getProductsByCategory = async (req, res) => {
+const getProductsByCategory = async (req: Request, res: Response) => {
   try {
     const category = await Category.findById(req.params.id).populate("products");
 
     if (!category) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "Category not found",
         error: true,
         data: undefined,
       });
+      return
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "Products obtained successfully",
       error: false,
       data: category.products,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
