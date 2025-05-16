@@ -1,7 +1,7 @@
 import express from "express";
-import userRouter from "./users/index.js";
-import productRouter from "./products/index.js";
-import categoryRouter from "./categories/index.js";
+import userRouter from "./users/";
+import productRouter from "./products/";
+import categoryRouter from "./categories/";
 
 const router = express.Router();
 
