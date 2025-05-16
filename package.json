@@ -6,10 +6,11 @@
   "author": "Federico Peralta <federicoperaltaquinteros@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "node ./dist/index.js",
+    "dev": "nodemon ./dist/index.js",
+    "start-tsnode": "ts-node src/index.ts"
   },
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
@@ -17,6 +18,14 @@
     "mongoose": "^8.13.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^22.15.18",
+    "@typescript-eslint/parser": "^8.32.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
   }
 }

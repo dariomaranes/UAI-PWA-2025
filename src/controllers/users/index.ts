@@ -1,6 +1,7 @@
-import User from "../../models/user.js";
+import User from "../../models/user";
+import { Request, Response } from "express";
 
-const createUser = async (req, res) => {
+const createUser = async (req: Request, res: Response) => {
   try {
     const user = new User(req.body);
     await user.save();
@@ -9,14 +10,14 @@ const createUser = async (req, res) => {
       data: user,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const getUsers = async (req, res) => {
+const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
     res.status(200).json({
@@ -24,36 +25,37 @@ const getUsers = async (req, res) => {
       data: users,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const getUserById = async (req, res) => {
+const getUserById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
     if (!user) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "User not found",
         error: true,
       });
+      return;
     }
     res.status(200).json({
       message: "Fetched successfully",
       data: user,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -65,38 +67,40 @@ const updateUser = async (req, res) => {
       { new: true }
     );
     if (!user) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "User not found",
         error: true,
       });
+      return;
     }
     res.status(200).json({
       message: "Updated successfully",
       data: user,
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await User.findByIdAndDelete(id);
     if (!user) {
-      return res.status(404).json({
+      res.status(404).json({
         message: "User not found",
         error: true,
       });
+      return;
     }
     res.status(200).json({
       message: "Deleted successfully",
       error: false,
     });
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
       error: error.message,
     });
