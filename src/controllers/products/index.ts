@@ -82,4 +82,107 @@ const getProductsByCategory = async (req: Request, res: Response) => {
   }
 };
 
-export { getProducts, getProductById, createProduct, getProductsByCategory };
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByIdAndDelete(id);
+    if (!product) {
+      res.status(404).json({
+        message: "Product not found",
+        error: true,
+      });
+      return;
+    }
+    res.status(200).json({
+      message: "Product deleted successfully",
+      error: false,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
+};
+
+const deactivateProduct = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByIdAndUpdate(
+      id,
+      { isActive: false },
+      { new: true }
+    )
+    if (!product) {
+      res.status(404).json({
+        message: "Product not found",
+        error: true,
+      });
+      return;
+    }
+    res.status(200).json({
+      message: "Product deactivated successfully",
+      data: product,
+      error: false,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
+};
+
+const activateProduct = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findByIdAndUpdate(
+      id,
+      { isActive: true },
+      { new: true }
+    )
+    if (!product) {
+      res.status(404).json({
+        message: "Product not found",
+        error: true,
+      });
+      return;
+    }
+    res.status(200).json({
+      message: "Product activated successfully",
+      data: product,
+      error: false,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
+};
+
+const searchProductsByName = async (req: Request, res: Response) => {
+  const { name } = req.query;
+  try {
+    const products = await Product.find({
+      name: { $regex: name, $options: "i" }
+    })
+    res.status(200).json({
+      message: "Products obtained successfully",
+      data: products,
+      error: false,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
+};
+
+export {
+  getProducts,
+  getProductById,
+  createProduct,
+  getProductsByCategory,
+  deleteProduct,
+  deactivateProduct,
+  activateProduct,
+  searchProductsByName
+};
