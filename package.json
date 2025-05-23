@@ -6,9 +6,7 @@
   "author": "Federico Peralta <federicoperaltaquinteros@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node ./dist/index.js",
-    "dev": "nodemon ./dist/index.js",
-    "start-tsnode": "ts-node src/index.ts"
+    "start": "nodemon src/index.ts"
   },
   "type": "commonjs",
   "dependencies": {
